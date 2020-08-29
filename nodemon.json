@@ -1,0 +1,11 @@
+{
+  "ignore": [
+    ".next/",
+    "*.test.ts"
+  ],
+  "watch": [
+    "server/"
+  ],
+  "ext": "ts",
+  "exec": "npm run dev:start"
+}
