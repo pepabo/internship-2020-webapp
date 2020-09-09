@@ -1,5 +1,4 @@
-import { Entity, PrimaryColumn, Column, CreateDateColumn, OneToOne } from 'typeorm'
-import { UserEntity } from './user'
+import { Entity, PrimaryColumn, Column, CreateDateColumn } from 'typeorm'
 
 @Entity({ name: 'articles' })
 export class ArticleEntity {
@@ -7,7 +6,6 @@ export class ArticleEntity {
   public id!: string
 
   @Column({ type: 'uuid' })
-  @OneToOne(() => UserEntity)
   public userId!: string
 
   @Column({ type: 'varchar', length: 255 })
