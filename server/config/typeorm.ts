@@ -1,5 +1,7 @@
 import { createConnection } from 'typeorm'
 import { ArticleEntity } from '../entities/article'
+import { UserEntity } from '../entities/user'
+import { SessionEntity } from '../entities/session'
 
 export const initTypeOrm = async () => {
   await createConnection({
@@ -10,6 +12,10 @@ export const initTypeOrm = async () => {
     username: process.env.DB_USER || 'myapp',
     password: process.env.DB_PASSWORD || 'password',
     database: process.env.DB_NAME || 'myapp',
-    entities: [ArticleEntity],
+    entities: [
+      ArticleEntity,
+      UserEntity,
+      SessionEntity,
+    ],
   })
 }
