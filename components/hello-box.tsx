@@ -22,6 +22,7 @@ export const HelloBox = () => {
     background: blue;
   `
 
+
   return (
     <div>
       <HelloDialog>Hello, {name}</HelloDialog>
