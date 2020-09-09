@@ -4,6 +4,7 @@ import bodyParser from 'body-parser'
 import next from 'next'
 import { apiRouter } from './routes'
 import { errorHandler } from './middlewares/error'
+import { initTypeOrm } from './config/typeorm'
 
 void (async () => {
   const dev = process.env.NODE_ENV !== 'production'
@@ -11,6 +12,8 @@ void (async () => {
   const app = next({ dev })
   const handle = app.getRequestHandler()
   await app.prepare()
+
+  await initTypeOrm()
 
   const server = express()
   const port = process.env.PORT ? parseInt(process.env.PORT, 10) : dev ? 3000 : 80
