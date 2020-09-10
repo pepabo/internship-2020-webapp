@@ -30,3 +30,5 @@ Members
 - [@waric0](https://github.com/waric0)
 - [@ikoma1234](https://github.com/ikoma1234)
 - [@nerdaces](https://github.com/nerdaces)
+- [@linyows](https://github.com/linyows)
+- [@dojineko](https://github.com/dojineko)
