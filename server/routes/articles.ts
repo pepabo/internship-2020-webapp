@@ -50,3 +50,25 @@ articlesRouter.get(
     res.status(200).json(result)
   }),
 )
+
+articlesRouter.delete(
+  '/:id',
+  wrap(async (req, res) => {
+    const id: string = req.params.id || ''
+
+    if (!id) {
+      res.sendStatus(400)
+      return
+    }
+
+    const mgr = getManager()
+    const result = await mgr.findOne(ArticleEntity, { id })
+    if (!result) {
+      res.sendStatus(404)
+      return
+    }
+
+    await mgr.delete(ArticleEntity, { id })
+    res.sendStatus(204)
+  }),
+)
