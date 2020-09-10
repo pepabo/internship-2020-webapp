@@ -15,6 +15,5 @@ export class UserEntity {
   public passwordHash!: string
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
-
   public createdAt!: Date
 }
