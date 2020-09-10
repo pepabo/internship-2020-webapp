@@ -13,7 +13,7 @@ export const Form = (props: { title: string, text: string }) => {
         const response = await ky.post("/post", {
             json: { blogtitle, body, token }
         })
-        const doc = await json()
+        const doc = await response.json()
         console.log(doc)
     }
 
