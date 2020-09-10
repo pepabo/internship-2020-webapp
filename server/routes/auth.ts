@@ -8,6 +8,7 @@ import { getManager } from 'typeorm'
 import { makeHash, encrypt } from '../utils/crypto'
 import { Response } from 'express'
 import { sessionExpiration, authTokenCookieName } from '../config/express'
+import { ArticleEntity } from '../entities/article'
 import { getAuthToken, getSessionFromAuthToken } from '../middlewares/auth'
 
 export const authRouter = Router()
@@ -101,6 +102,25 @@ authRouter.post(
 
     const mgr = getManager()
     await mgr.delete(SessionEntity, { userId: session.userId, token: session.token })
+
+    await clearToken(res)
+
+    res.sendStatus(204)
+  }),
+)
+
+authRouter.post(
+  '/unsubscribe',
+  wrap(async (req, res) => {
+    if (!req.userId || !req.token) {
+      res.status(403)
+      return
+    }
+
+    const mgr = getManager()
+    await mgr.delete(SessionEntity, { userId: req.userId, token: req.token })
+    await mgr.delete(ArticleEntity, { userId: req.userId })
+    await mgr.delete(UserEntity, { id: req.userId })
 
     await clearToken(res)
 
