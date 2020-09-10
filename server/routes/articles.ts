@@ -3,6 +3,7 @@ import { wrap } from '../utils/wrap'
 import { getManager } from 'typeorm'
 import { v4 as uuid } from 'uuid'
 import { ArticleEntity } from '../entities/article'
+import { SessionEntity } from '../entities/session'
 
 export const articlesRouter = Router()
 
@@ -19,6 +20,13 @@ articlesRouter.post(
     }
 
     const mgr = getManager()
+    const session = await mgr.findOne(SessionEntity, { userId, token: req.token })
+
+    if (!session) {
+      res.sendStatus(403)
+      return
+    }
+
     const result = await mgr.save(ArticleEntity, {
       id: uuid(),
       userId,
@@ -66,9 +74,15 @@ articlesRouter.get(
 
     const mgr = getManager()
     const result = await mgr.findOne(ArticleEntity, { id, userId })
+    const session = await mgr.findOne(SessionEntity, { userId, token: req.token })
 
     if (!result) {
       res.sendStatus(404)
+      return
+    }
+
+    if (!session) {
+      res.sendStatus(403)
       return
     }
 
@@ -92,9 +106,15 @@ articlesRouter.post(
 
     const mgr = getManager()
     const article = await mgr.findOne(ArticleEntity, { id, userId })
+    const session = await mgr.findOne(SessionEntity, { userId, token: req.token })
 
     if (!article) {
       res.sendStatus(404)
+      return
+    }
+
+    if (!session) {
+      res.sendStatus(403)
       return
     }
 
