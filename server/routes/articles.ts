@@ -6,6 +6,15 @@ import { ArticleEntity } from '../entities/article'
 
 export const articlesRouter = Router()
 
+articlesRouter.get(
+  '/',
+  wrap(async (_req, res) => {
+    const mgr = getManager()
+    const result = await mgr.find(ArticleEntity)
+    res.status(200).json(result)
+  }),
+)
+
 articlesRouter.post(
   '/',
   wrap(async (req, res) => {
