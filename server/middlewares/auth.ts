@@ -6,7 +6,7 @@ import { SessionEntity } from '../entities/session'
 
 export const authMiddleware = wrap(async (req, res, next) => {
   const mgr = getManager()
-  if (/^\/api\/(signup|login)$/.test(req.path)) {
+  if (/^\/|\/api\/(signup|login|articles\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$/.test(req.path)) {
     next()
     return
   }

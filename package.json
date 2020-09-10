@@ -1,5 +1,5 @@
 {
-  "name": "node-sample-base",
+  "name": "@pepabo/internship-2020-webapp",
   "author": "dojineko",
   "scripts": {
     "start": "ts-node -P ./server/tsconfig.json ./server/index.ts",
