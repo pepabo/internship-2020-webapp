@@ -1,8 +1,9 @@
 import { Form } from "~/components/form"
+import { BlogPost } from '~/components/blog-post'
 
-export const BlogPost = () => (
+export const BlogPosts = () => (
     <div>
-        <Form title="記事名" text="本文" />
+        <BlogPost />
     </div>
 )
 
