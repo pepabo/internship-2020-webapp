@@ -1,8 +1,5 @@
 import { ArticleList } from '~/components/article-list'
-import { HelloBox } from '~/components/hello-box'
-import { BlogBox } from '~/components/blog-box'
-import { LoginBox } from '~/components/login-box'
-import Link from "next/link"
+import Link from 'next/link'
 
 export const IndexPage = () => (
   <div>
@@ -34,7 +31,7 @@ export const IndexPage = () => (
         </Link>
       </li>
       <li>
-        <Link href="/artilces/new">
+        <Link href="/articles/new">
           <a>📝 記事を投稿</a>
         </Link>
       </li>
@@ -42,6 +39,6 @@ export const IndexPage = () => (
 
     <h2>記事一覧</h2>
     <ArticleList />
-  </div >
+  </div>
 )
 export default IndexPage
