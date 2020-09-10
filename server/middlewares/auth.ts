@@ -3,15 +3,26 @@ import { getManager } from 'typeorm'
 import jwtSimple from 'jwt-simple'
 import { jwtKey, jwtAlgo } from '../config/jwt'
 import { SessionEntity } from '../entities/session'
+import { authTokenCookieName } from '../config/express'
 
 export const authMiddleware = wrap(async (req, res, next) => {
   const mgr = getManager()
-  if (/^\/api\/(signup|login)$/.test(req.path)) {
+  if (/^\/|\/api\/(signup|login|articles\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$/.test(req.path)) {
     next()
     return
   }
-  const parts = req.headers.authorization ? req.headers.authorization.split(' ') : ''
-  const token = parts.length === 2 && parts[0] === 'Bearer' ? parts[1] : null
+
+  const token: string = (() => {
+    // Authorization Header からトークンを取り出す
+    const parts = req.headers.authorization ? req.headers.authorization.split(' ') : ''
+    const bearerToken = parts.length === 2 && parts[0] === 'Bearer' ? parts[1] : null
+    if (bearerToken) {
+      return bearerToken
+    }
+    // なければ Cookie を使う
+    return req.cookies[authTokenCookieName] || ''
+  })()
+
   if (!token) {
     res.sendStatus(403)
     return
