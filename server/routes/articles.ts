@@ -9,10 +9,11 @@ export const articlesRouter = Router()
 articlesRouter.post(
   '/',
   wrap(async (req, res) => {
+    const userId: string = req.userId || ''
     const title: string = req.body.title || ''
     const body: string = req.body.body || ''
 
-    if (!title || !body) {
+    if (!title || !body || !userId) {
       res.sendStatus(400)
       return
     }
@@ -20,7 +21,7 @@ articlesRouter.post(
     const mgr = getManager()
     const result = await mgr.save(ArticleEntity, {
       id: uuid(),
-      userId: req.userId,
+      userId,
       title,
       body,
     })
@@ -55,20 +56,21 @@ articlesRouter.delete(
   '/:id',
   wrap(async (req, res) => {
     const id: string = req.params.id || ''
+    const userId: string = req.userId || ''
 
-    if (!id) {
+    if (!id || !userId) {
       res.sendStatus(400)
       return
     }
 
     const mgr = getManager()
-    const result = await mgr.findOne(ArticleEntity, { id })
+    const result = await mgr.findOne(ArticleEntity, { id, userId })
     if (!result) {
       res.sendStatus(404)
       return
     }
 
-    await mgr.delete(ArticleEntity, { id })
+    await mgr.delete(ArticleEntity, { id, userId })
     res.sendStatus(204)
   }),
 )
