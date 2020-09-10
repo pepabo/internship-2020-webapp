@@ -1,9 +1,9 @@
 import { useState, FormEvent } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { loginUser } from '~/api-client/auth'
+import { signupUser } from '~/api-client/auth'
 
-export const LoginPage: React.FC = () => {
+export const SignupPage: React.FC = () => {
   const router = useRouter()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -11,17 +11,17 @@ export const LoginPage: React.FC = () => {
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault()
     try {
-      await loginUser({ email, password })
+      await signupUser({ email, password })
       router.push('/')
     } catch (e) {
-      alert(`ログインに失敗しました: ${e}`)
+      alert(`サインアップに失敗しました: ${e}`)
     }
   }
 
   return (
     <article>
       <div>
-        <h1>ログイン</h1>
+        <h1>サインアップ</h1>
         <div>
           <form onSubmit={onSubmit}>
             <div>
@@ -45,4 +45,4 @@ export const LoginPage: React.FC = () => {
   )
 }
 
-export default LoginPage
+export default SignupPage

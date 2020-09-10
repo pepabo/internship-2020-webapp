@@ -1,6 +1,7 @@
 import 'reflect-metadata'
 import express from 'express'
 import bodyParser from 'body-parser'
+import cookieParser from 'cookie-parser'
 import next from 'next'
 import { apiRouter } from './routes'
 import { authRouter } from './routes/auth'
@@ -20,6 +21,7 @@ void (async () => {
   const server = express()
   const port = process.env.PORT ? parseInt(process.env.PORT, 10) : dev ? 3000 : 80
 
+  server.use(cookieParser(process.env.COOKIE_SECRET || 'dummy'))
   server.use(bodyParser.json())
   server.use(authMiddleware)
   server.use('/api', apiRouter)

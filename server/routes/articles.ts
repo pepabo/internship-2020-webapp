@@ -20,7 +20,7 @@ articlesRouter.post(
     const mgr = getManager()
     const result = await mgr.save(ArticleEntity, {
       id: uuid(),
-      userId: uuid(),
+      userId: req.userId,
       title,
       body,
     })

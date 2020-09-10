@@ -12,13 +12,13 @@ export const BlogBox = () => {
     ]
 
     const items = articles.map((v) => (
-        <dir>
+        <div>
             <h1>{v.title}</h1>
             <h2>{v.body}</h2>
             <span>{v.date}</span>
             <br></br>
             ______________________________________________________________________
-        </dir>
+        </div>
     ))
 
     return (
