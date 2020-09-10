@@ -9,6 +9,10 @@ export const IndexPage = () => (
     <Link href="/abc/blog"><a>test</a></Link>
     <br />
     <Link href="/loginpage"><a>ログイン</a></Link>
+    <br />
+    <Link href="/blogList"><a>ブログ一覧</a></Link>
+    <br />
+    <Link href="/blogPost"><a>記事を投稿</a></Link>
   </div >
 )
 export default IndexPage

@@ -1,9 +1,21 @@
 import styled from 'styled-components'
 import { FormEvent, useState } from 'react'
+import ky from 'ky'
+import { json } from 'body-parser'
 
 export const Form = (props: { title: string, text: string }) => {
     const [blogtitle, setBlogTitle] = useState("")
     const [body, setBody] = useState("")
+
+
+    const send_blog = async () => {
+        const token: string = ""
+        const response = await ky.post("/post", {
+            json: { blogtitle, body, token }
+        })
+        const doc = await json()
+        console.log(doc)
+    }
 
     const Form = styled.form`
         width:500px;
@@ -31,19 +43,18 @@ export const Form = (props: { title: string, text: string }) => {
         border-radius:10px;
     `
 
-
-
-
     return (
         <div>
             <div>
                 <label>{props.title}</label>
-                <Input type="text" name="title" onChange={(e) => setBlogTitle(e.target.value)} />
+                <input type="text" name="title" onChange={(e) => setBlogTitle(e.target.value)} />
                 <Br />
                 <label>{props.text}</label>
-                <Text onChange={(e) => setBody(e.target.value)}></Text>
                 <Br />
-                <button onClick={() => console.log("test")}></button>
+                <textarea onChange={(e) => setBody(e.target.value)}></textarea>
+                <Br />
+                <button onClick={() => console.log("test")}>投稿</button>
+                <p>title:{blogtitle} body: {body}</p>
             </div>
         </div >
     )
