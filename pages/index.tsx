@@ -15,6 +15,16 @@ export const IndexPage = () => (
         </Link>
       </li>
       <li>
+        <Link href="/logout">
+          <a>🚗 ログアウト</a>
+        </Link>
+      </li>
+      <li>
+        <Link href="/unsubscribe">
+          <a>🚪 退会</a>
+        </Link>
+      </li>
+      <li>
         <Link href="/articles">
           <a>🌻 ブログ一覧</a>
         </Link>
