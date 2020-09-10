@@ -7,7 +7,11 @@ import { authTokenCookieName } from '../config/express'
 
 export const authMiddleware = wrap(async (req, res, next) => {
   const mgr = getManager()
-  if (/^\/|\/api\/(signup|login|articles\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$/.test(req.path)) {
+  if (
+    !/^\/api\/?/.test(req.path) ||
+    (req.method.toLowerCase() === 'get' && /^\/api\/(fetch|articles|articles\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$/.test(req.path)) ||
+    (req.method.toLowerCase() === 'post' && /^\/api\/(signup|login|logout)$/.test(req.path))
+  ) {
     next()
     return
   }
