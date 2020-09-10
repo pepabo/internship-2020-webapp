@@ -8,6 +8,7 @@ import { getManager } from 'typeorm'
 import { makeHash, encrypt } from '../utils/crypto'
 import { Response } from 'express'
 import { sessionExpiration, authTokenCookieName } from '../config/express'
+import { getAuthToken, getSessionFromAuthToken } from '../middlewares/auth'
 
 export const authRouter = Router()
 
@@ -25,7 +26,7 @@ const clearToken = async (res: Response) => {
 }
 
 authRouter.post(
-  '/api/signup',
+  '/signup',
   wrap(async (req, res) => {
     const email: string = req.body.email || ''
     const password: string = req.body.password || ''
@@ -58,7 +59,7 @@ authRouter.post(
 )
 
 authRouter.post(
-  '/api/login',
+  '/login',
   wrap(async (req, res) => {
     const email: string = req.body.email || ''
     const password: string = req.body.password || ''
@@ -88,14 +89,18 @@ authRouter.post(
 )
 
 authRouter.post(
-  '/api/logout',
+  '/logout',
   wrap(async (req, res) => {
-    if (!req.userId || !req.token) {
-      res.status(403)
+    const authToken = getAuthToken(req)
+    const session = await getSessionFromAuthToken(authToken)
+
+    if (!session) {
+      res.sendStatus(200)
       return
     }
+
     const mgr = getManager()
-    await mgr.delete(SessionEntity, { userId: req.userId, token: req.token })
+    await mgr.delete(SessionEntity, { userId: session.userId, token: session.token })
 
     await clearToken(res)
 
