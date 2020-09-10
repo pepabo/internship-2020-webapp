@@ -25,3 +25,11 @@ export interface SignupUserApiResponse {
 export const signupUser = async (arg: SignupUserApiRequest) => {
   return await ky.post('/api/signup', { json: arg }).json<SignupUserApiResponse>()
 }
+
+export const logoutUser = async () => {
+  return await ky.post('/api/logout').json()
+}
+
+export const unsubscribeUser = async () => {
+  return await ky.post('/api/unsubscribe').json()
+}
