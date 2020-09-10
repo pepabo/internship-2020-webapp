@@ -100,8 +100,8 @@ articlesRouter.get(
 )
 
 //記事の内容を上書き
-articlesRouter.post(
-  '/update/:id',
+articlesRouter.put(
+  '/:id',
   wrap(async (req, res) => {
     const id: string = req.params.id || ''
     const userId: string = req.userId || ''
