@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import ky from 'ky'
 
-export const LoginBox = () => {
+export const LoginBox = (props: { name: string }) => {
 
     const [mail, setInputMail] = useState('')
     const [password, setInputPass] = useState('')
