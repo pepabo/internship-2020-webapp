@@ -2,6 +2,8 @@ import styled from 'styled-components'
 import { FormEvent, useState } from 'react'
 
 export const Form = (props: { title: string, text: string }) => {
+    const [blogtitle, setBlogTitle] = useState("")
+    const [body, setBody] = useState("")
 
     const Form = styled.form`
         width:500px;
@@ -29,17 +31,20 @@ export const Form = (props: { title: string, text: string }) => {
         border-radius:10px;
     `
 
+
+
+
     return (
         <div>
-            <Form action="" method="POST">
+            <div>
                 <label>{props.title}</label>
-                <Input type="text" name="title" />
+                <Input type="text" name="title" onChange={(e) => setBlogTitle(e.target.value)} />
                 <Br />
                 <label>{props.text}</label>
-                <Text></Text>
+                <Text onChange={(e) => setBody(e.target.value)}></Text>
                 <Br />
-                <Input type="submit" />
-            </Form>
+                <button onClick={() => console.log("test")}></button>
+            </div>
         </div >
     )
 }
