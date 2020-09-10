@@ -1,4 +1,8 @@
-import Link from 'next/link'
+import { ArticleList } from '~/components/article-list'
+import { HelloBox } from '~/components/hello-box'
+import { BlogBox } from '~/components/blog-box'
+import { LoginBox } from '~/components/login-box'
+import Link from "next/link"
 
 export const IndexPage = () => (
   <div>
@@ -25,6 +29,9 @@ export const IndexPage = () => (
         </Link>
       </li>
     </ul>
-  </div>
+
+    <h2>記事一覧</h2>
+    <ArticleList />
+  </div >
 )
 export default IndexPage
