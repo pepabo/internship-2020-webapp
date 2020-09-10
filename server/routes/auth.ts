@@ -6,8 +6,23 @@ import { Router } from 'express'
 import { makeSession } from '../utils/session'
 import { getManager } from 'typeorm'
 import { makeHash, encrypt } from '../utils/crypto'
+import { Response } from 'express'
+import { sessionExpiration, authTokenCookieName } from '../config/express'
 
 export const authRouter = Router()
+
+const setToken = async (res: Response, token: string, baseTime = new Date()) => {
+  const expires = new Date(baseTime)
+  expires.setHours(baseTime.getHours() + sessionExpiration)
+  res.cookie(authTokenCookieName, token, {
+    httpOnly: true,
+    expires,
+  })
+}
+
+const clearToken = async (res: Response) => {
+  res.clearCookie(authTokenCookieName)
+}
 
 authRouter.post(
   '/api/signup',
@@ -35,6 +50,8 @@ authRouter.post(
       passwordHash: makeHash(password, salt),
     })
     const token = await makeSession(result.id)
+
+    await setToken(res, token, new Date())
 
     res.status(201).json({ token })
   }),
@@ -64,6 +81,8 @@ authRouter.post(
 
     const token = await makeSession(user.id)
 
+    await setToken(res, token, new Date())
+
     res.status(200).json({ token })
   }),
 )
@@ -77,6 +96,9 @@ authRouter.post(
     }
     const mgr = getManager()
     await mgr.delete(SessionEntity, { userId: req.userId, token: req.token })
+
+    await clearToken(res)
+
     res.sendStatus(204)
   }),
 )
